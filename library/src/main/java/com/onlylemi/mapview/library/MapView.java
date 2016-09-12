@@ -6,9 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Picture;
 import android.graphics.PointF;
-import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -30,36 +28,36 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = "MapView";
 
-    private SurfaceHolder holder;
-    private MapViewListener mapViewListener = null;
-    private boolean isMapLoadFinish = false;
-    private List<MapBaseLayer> layers; // all layers
-    private MapLayer mapLayer;
+    protected SurfaceHolder holder;
+    protected MapViewListener mapViewListener = null;
+    protected boolean isMapLoadFinish = false;
+    protected List<MapBaseLayer> layers; // all layers
+    protected MapLayer mapLayer;
 
     private Canvas canvas;
 
-    private float minZoom = 0.5f;
-    private float maxZoom = 3.0f;
+    protected float minZoom = 0.5f;
+    protected float maxZoom = 3.0f;
 
-    private PointF startTouch = new PointF();
-    private PointF mid = new PointF();
+    protected PointF startTouch = new PointF();
+    protected PointF mid = new PointF();
 
-    private Matrix saveMatrix = new Matrix();
-    private Matrix currentMatrix = new Matrix();
-    private float currentZoom = 1.0f;
-    private float saveZoom = 0f;
-    private float currentRotateDegrees = 0.0f;
-    private float saveRotateDegrees = 0.0f;
+    protected Matrix saveMatrix = new Matrix();
+    protected Matrix currentMatrix = new Matrix();
+    protected float currentZoom = 1.0f;
+    protected float saveZoom = 0f;
+    protected float currentRotateDegrees = 0.0f;
+    protected float saveRotateDegrees = 0.0f;
 
-    private static final int TOUCH_STATE_NO = 0; // no touch
-    private static final int TOUCH_STATE_SCROLL = 1; // scroll(one point)
-    private static final int TOUCH_STATE_SCALE = 2; // scale(two points)
-    private static final int TOUCH_STATE_ROTATE = 3; // rotate(two points)
-    private static final int TOUCH_STATE_TWO_POINTED = 4; // two points touch
-    private int currentTouchState = MapView.TOUCH_STATE_NO; // default touch state
+    protected static final int TOUCH_STATE_NO = 0; // no touch
+    protected static final int TOUCH_STATE_SCROLL = 1; // scroll(one point)
+    protected static final int TOUCH_STATE_SCALE = 2; // scale(two points)
+    protected static final int TOUCH_STATE_ROTATE = 3; // rotate(two points)
+    protected static final int TOUCH_STATE_TWO_POINTED = 4; // two points touch
+    protected int currentTouchState = MapView.TOUCH_STATE_NO; // default touch state
 
-    private float oldDist = 0, oldDegree = 0;
-    private boolean isScaleAndRotateTogether = false;
+    protected float oldDist = 0, oldDegree = 0;
+    protected boolean isScaleAndRotateTogether = false;
 
     public MapView(Context context) {
         this(context, null);
@@ -429,17 +427,17 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
         this.currentZoom = zoom;
     }
 
-    private PointF midPoint(MotionEvent event) {
+    protected PointF midPoint(MotionEvent event) {
         return MapMath.getMidPointBetweenTwoPoints(event.getX(0), event.getY(0)
                 , event.getX(1), event.getY(1));
     }
 
-    private float distance(MotionEvent event, PointF mid) {
+    protected float distance(MotionEvent event, PointF mid) {
         return MapMath.getDistanceBetweenTwoPoints(event.getX(0), event.getY(0)
                 , mid.x, mid.y);
     }
 
-    private float rotation(MotionEvent event, PointF mid) {
+    protected float rotation(MotionEvent event, PointF mid) {
         return MapMath.getDegreeBetweenTwoPoints(event.getX(0), event.getY(0)
                 , mid.x, mid.y);
     }
